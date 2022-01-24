@@ -15,7 +15,7 @@
       <input type="text" id="msg" name="msg" />
     </div>
     <button id="send">Send</button>
-
+    <button id="close">Close</button>
     <ul id="list"></ul>
 
     <script>
@@ -30,8 +30,8 @@
         console.log("Connected to server");
       });
       // when the browser disconnect from the server
-      socket.on("disconnect", function () {
-        console.log("Disconnected from server");
+      socket.on("disconnect", function (reason) {
+        console.log("Disconnected from server", reason);
       });
       // when the server send a message
       socket.on("msg", function (data) {
@@ -39,6 +39,10 @@
         // add to list
         li.innerHTML = data;
         list.appendChild(li);
+      });
+
+      document.querySelector("#close").addEventListener("click", function () {
+        socket.disconnect();
       });
 
       // click button handler
